@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84BF8943-F8D4-4E75-98C1-0294FAD45F80}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyBlogProject.DataCore</RootNamespace>
+    <AssemblyName>MyBlogProject.DataCore</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EntityFramework\BlogDbContext.cs" />
+    <Compile Include="EntityFramework\ModelConfigurations\BlogConfiguration.cs" />
+    <Compile Include="EntityFramework\ModelConfigurations\BlogSortConfiguration.cs" />
+    <Compile Include="EntityFramework\ModelConfigurations\CommentConfiguration.cs" />
+    <Compile Include="EntityFramework\ModelConfigurations\MsgBoardConfiguration.cs" />
+    <Compile Include="EntityFramework\ModelConfigurations\UserConfiguration.cs" />
+    <Compile Include="Migrations\201409091313402_InitialCreate.cs" />
+    <Compile Include="Migrations\201409091313402_InitialCreate.Designer.cs">
+      <DependentUpon>201409091313402_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409161517247_init.cs" />
+    <Compile Include="Migrations\201409161517247_init.Designer.cs">
+      <DependentUpon>201409161517247_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409291347013_blogsort.cs" />
+    <Compile Include="Migrations\201409291347013_blogsort.Designer.cs">
+      <DependentUpon>201409291347013_blogsort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409291445537_delSortId.cs" />
+    <Compile Include="Migrations\201409291445537_delSortId.Designer.cs">
+      <DependentUpon>201409291445537_delSortId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410081316581_Com.cs" />
+    <Compile Include="Migrations\201410081316581_Com.Designer.cs">
+      <DependentUpon>201410081316581_Com.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyBlogProject.Entity\MyBlogProject.Entity.csproj">
+      <Project>{4cb5894f-3ee1-4c03-a3f1-5696d784703a}</Project>
+      <Name>MyBlogProject.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409091313402_InitialCreate.resx">
+      <DependentUpon>201409091313402_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409161517247_init.resx">
+      <DependentUpon>201409161517247_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409291347013_blogsort.resx">
+      <DependentUpon>201409291347013_blogsort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409291445537_delSortId.resx">
+      <DependentUpon>201409291445537_delSortId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410081316581_Com.resx">
+      <DependentUpon>201410081316581_Com.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,57 @@
+﻿@using Microsoft.Ajax.Utilities
+@using MyBlogProject.Entity
+@model Blog
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detail</h1>
+
+<div class="blogtitle" style="text-align: center">
+    <h1>@Model.Title</h1>
+</div>
+<div class="content">
+    <div>@Html.Raw(Model.Content)</div>
+    <br />
+    @foreach (var sort in ViewData["blogSort"] as ICollection<BlogSort>)
+    {
+        @Html.ActionLink(sort.SortName,"Tag","Home",new{id=sort.SortId},new{})<span> </span>
+    }
+    <div id="clicki_widget_7899" title=""></div>
+    <br/>
+    <div class="comment" style="padding-bottom: 5px;">
+        @foreach (var sort in ViewData["blogComments"] as ICollection<Comment>)
+        {
+            <div style="border-bottom: darkgray solid 1px;margin-top: 5px;padding:5px">
+                <div style=""><span style="font-weight:bolder">@sort.Commenter</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>@sort.CreateTime</span></div>
+                <div>@sort.Content</div>
+            </div>
+        }
+    </div>
+    <br/>
+    @using (@Html.BeginForm("AddComment", "Blog"))
+    {
+        <div><span>姓名:&nbsp;</span>@Html.TextBox("comName","",new{style="width: 400px"})</div>
+        <div><span>邮箱:&nbsp;</span>@Html.TextBox("comEmail","",new{style="width: 400px"})</div>
+        <div><div style="float: left">评论:&nbsp;</div>@Html.TextArea("comContent","",8,20,new{style="width: 400px"})</div>
+        <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="submit" value="提交评论"/></div>
+        @Html.Hidden("hidBlogId", Model.BlogId)
+    }
+   <hr/>
+    <div>
+        @foreach (var post in ViewData["bortherPost"] as Dictionary<Int64, string>)
+        {
+             if (post.Key < Model.BlogId)
+            {
+            <div><span>上一篇：</span> @Html.ActionLink(post.Value,"Post",new{id=post.Key})</div>
+            }
+            if (post.Key > Model.BlogId)
+            {
+            <div><span>下一篇：</span> @Html.ActionLink(post.Value,"Post",new{id=post.Key})</div>
+            }
+        }
+        <br />
+    </div>
+</div>
+

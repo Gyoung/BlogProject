@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Add";
+}
+@using MyBlogProject.Entity
+@using MyBlogProject.Models
+@model MyBlogProject.Entity.Blog
+
+ @Scripts.Render("~/bundles/jqueryui")
+ @Styles.Render("~/Content/themes/base/css")
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<h2>Add</h2>
+<div class="content">
+    @using (@Html.BeginForm("Save", "Blog"))
+    {
+        <div>标题:</div>
+        if (LoginHelper.IsEditMode && Model != null)
+        {
+            @Html.TextBox("blogTitle", Model.Title, new { @style = "width: 100%" });
+        }
+        else
+        {
+            @Html.TextBox("blogTitle", "", new { @style = "width: 100%" });
+        }
+        <div>内容:</div>
+        if (LoginHelper.IsEditMode && Model != null)
+        {
+            @Html.TextArea("ckeditor",Model.Content,new{@class="ckeditor"})
+            @Html.Hidden("blogId",Model.BlogId)
+        }
+        else
+        {
+            @Html.TextArea("ckeditor","",new{@class="ckeditor"})
+            @Html.Hidden("blogId",0)
+        }
+        
+        <div>标签:</div>
+        <div id="blogSort">
+            @foreach (var sort in ViewData["blogSort"] as Dictionary<Int64, string>)
+            {
+                <span>@Html.CheckBox("ck|"+sort.Key)@Html.Label("sortName",sort.Value)</span>    
+            }
+        </div>
+        <input type="button" id="dialog-link" value="增加标签"  />
+        <input type="submit" value="提交" />
+        <div id="dialog">
+            <span>标签名称：</span><span><input type="text" id="sortName"/></span>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 400,
+            buttons: [
+                {
+                    text: "Ok",
+                    click: function () {
+                        $.ajax({
+                            type: "post",
+                            url: "/Blog/AddTag",
+                            data:{tag:$("#sortName").val()},
+                            success: function (data) {
+                                var ck = '<span><input id="tag|"'+data.SortId+'name="sort" type="checkbox" value="true" />';
+                                ck += '<input name="sort" type="hidden" value="false" /> <label for="sortName">' + data.SortName + '</label></span> ';
+                                $("#blogSort").append(ck);
+                            },
+                            error:function(data) {
+                                
+                            }
+                        });
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: "Cancel",
+                    click: function() {
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+
+        $("#dialog-link").click(function (event) {
+            $("#sortName").val("");
+            $("#dialog").dialog("open");
+            event.preventDefault();
+        });
+    });
+</script>
